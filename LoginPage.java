@@ -6,12 +6,18 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import Utilities.ScreenShots;
+import Utilities.WaitHelper;
+
 public class LoginPage {
 	public WebDriver ldriver;
-	
+	WaitHelper helper;
+	ScreenShots screenShot;
 	public LoginPage(WebDriver rdriver) {
 		ldriver = rdriver;
 		PageFactory.initElements(rdriver,this);
+		helper = new WaitHelper(ldriver);
+		screenShot = new ScreenShots();
 	}
 @FindBy(id="Email")
 @CacheLookup
