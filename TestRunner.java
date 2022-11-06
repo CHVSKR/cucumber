@@ -5,7 +5,7 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = {".//Features/Login.feature",".//Features/Customers.feature"},
+@CucumberOptions(features = {".//Features/Login.feature",".//Features/Customers.feature",".//Features/Dynamic.feature"},
 			glue = "StepDefinitions", 
 			dryRun = false, 
 			monochrome = true, 
