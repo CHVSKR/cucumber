@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import PageObjects.AddCustomerPage;
+import PageObjects.DynamicTable;
 import PageObjects.LoginPage;
 import PageObjects.SearchCustomer;
 import cucumber.api.java.Before;
@@ -241,6 +242,69 @@ public class LoginTest extends BaseClass {
 		Assert.assertEquals(true, status);
 	}
 
+	//Dynamic Web table
+	@Given("User Launched Chrome browser")
+	public void user_Launched_Chrome_browser() throws IOException {
+		configprop = new Properties();
+		FileInputStream configpropfile = new FileInputStream("config.properties");
+		configprop.load(configpropfile);
+		logger = Logger.getLogger("nopcommerce");
+		PropertyConfigurator.configure("log4j.properties");
+		String br = configprop.getProperty("browser");
+		if(br.equals("chrome")){
+		System.setProperty("webdriver.chrome.driver", configprop.getProperty("chromepath"));
+		driver = new ChromeDriver();
+		logger.info("Launching Browser");
+		}
+	}
+
+//	@When("URL given as {string}")
+//	public void url_given_as(String string) {
+//	    
+//	}
+	
+	@When("URL is entered")
+	public void url_is_entered() {
+		logger.info("Opening URL");
+		driver.get(configprop.getProperty("URL"));
+		driver.manage().window().maximize();
+	}
+
+	@When("User Entered Email as {string} and Password as {string}")
+	public void user_Entered_Email_as_and_Password_as(String string, String string2) {
+		dynamicTable= new DynamicTable(driver);
+		dynamicTable.setUserName(string);
+		dynamicTable.setpswd(string2);
+	}
+
+	@When("clicked on Login button")
+	public void clicked_on_Login_button() throws InterruptedException {
+		logger.info("Login");
+		dynamicTable.loginClick();
+		Thread.sleep(3000);
+		String window = driver.getWindowHandle();
+		driver.switchTo().window(window);
+		driver.findElement(By.xpath("//button[@class='btn-close']")).click();
+	}
+	
+	@Then("Page title should be verified as {string}")
+	public void page_title_should_be_verified_as(String string) {
+		logger.info("Verify Title");
+		Assert.assertEquals(string, dynamicTable.getPageTitle());
+	}
+
+	@When("user click on Sales icon")
+	public void saleIcon() {
+		logger.info("SalesIcon");
+		dynamicTable.saleIcon();
+	}
+
+	@When("Click on order item")
+	public void click_on_order_item() throws InterruptedException {
+		logger.info("OrderMenu");
+		dynamicTable.returnMenu();
+	}
+	
 	@Then("close browser")
 	public void close_browser() {
 		logger.info("Closing Browser");
