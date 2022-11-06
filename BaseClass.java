@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 import PageObjects.AddCustomerPage;
+import PageObjects.DynamicTable;
 import PageObjects.LoginPage;
 import PageObjects.SearchCustomer;
 
@@ -17,6 +18,7 @@ public class BaseClass {
 	public SearchCustomer searchCustomer;
 	public Logger logger;
 	public Properties configprop;
+	public DynamicTable dynamicTable;
 	
 	public static String randomeString() {
 		String generatedString1 = RandomStringUtils.randomAlphabetic(5);
